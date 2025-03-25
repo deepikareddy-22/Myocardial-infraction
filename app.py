@@ -7,7 +7,10 @@ with open("model.pkl", "rb") as f:
     model = pickle.load(f)
 
 app = Flask(__name__)
-
+@app.route('/')
+def home():
+    return render_template('home.html')
+    
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
