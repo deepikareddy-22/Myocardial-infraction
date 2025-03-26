@@ -7,56 +7,60 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #ff758c, #ff7eb3);
-            color: white;
+            background-color: #f8f9fa;
             text-align: center;
-            padding: 20px;
+            padding: 30px;
         }
         .container {
-            background: rgba(0, 0, 0, 0.7);
+            max-width: 600px;
+            margin: auto;
             padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            display: inline-block;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
         h1 {
-            font-size: 28px;
-            color: #ffcccb;
+            color: #007bff;
+        }
+        p {
+            font-size: 18px;
+            color: #333;
         }
         .result {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
-            color: #00ff99;
-        }
-        .error {
-            color: #ffcc00;
+            color: #28a745;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            background-color: #e9ffe9;
         }
         table {
             width: 100%;
             margin-top: 20px;
             border-collapse: collapse;
         }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
         th, td {
             padding: 10px;
-            border: 1px solid white;
+            text-align: left;
         }
         th {
-            background: #ffcccb;
-            color: black;
-        }
-        td {
-            background: #333;
+            background-color: #007bff;
+            color: white;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🔥 Prediction Result 🔥</h1>
+        <h1>Prediction Result</h1>
         {% if error %}
-            <p class="error">⚠️ Error: {{ error }}</p>
+            <p style="color: red;">Error: {{ error }}</p>
         {% else %}
-            <p class="result">Predicted Outcome: {{ prediction }}</p>
-            <h2>📊 Input Data 📊</h2>
+            <p>The predicted outcome is: <span class="result">{{ prediction }}</span></p>
+            <h2>Entered Data</h2>
             <table>
                 <tr>
                     <th>Feature</th>
@@ -71,7 +75,11 @@
             </table>
         {% endif %}
         <br>
-        <a href="/" style="color: #00ff99; text-decoration: none; font-size: 18px;">🔄 Go Back</a>
+        <a href="/" style="text-decoration: none; color: #007bff; font-weight: bold;">⬅ Go Back</a>
     </div>
 </body>
 </html>
+
+            
+        
+    
