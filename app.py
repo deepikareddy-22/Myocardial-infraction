@@ -3,31 +3,32 @@ import pickle
 import numpy as np
 import pandas as pd
 
-# Load the trained XGBoost model
+# Load the trained model
 with open("model.pkl", "rb") as f:
     model = pickle.load(f)
 
-# Define column names
-column_names = ["AGE", "SEX", "INF_ANAM", "STENOK_AN", "FK_STENOK", "IBS_POST", "IBS_NASL", "GB", "SIM_GIPERT", "DLIT_AG"]
+# Define top 10 important features based on feature importance analysis
+top_features = ["ID", "D_AD_ORIT", "S_AD_ORIT", "K_SH_POST", "L_BLOOD", 
+                "ANT_CA_S_n", "ZSN", "AGE", "TIME_B_S", "NITR_S"]
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('home.html', columns=column_names)
+    return render_template('home.html', columns=top_features)
 
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        # Get data from form
-        data = [float(x) for x in request.form.values()]
+        # Extract input data corresponding to top features
+        data = [float(request.form.get(feature, 0)) for feature in top_features]
         features = np.array(data).reshape(1, -1)
         
         # Make prediction
         prediction = model.predict(features)[0]
         
         # Pair column names with entered values
-        input_data = dict(zip(column_names, data))
+        input_data = dict(zip(top_features, data))
         
         return render_template("result.html", prediction=int(prediction), input_data=input_data)
     except Exception as e:
@@ -35,3 +36,5 @@ def predict():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+        
