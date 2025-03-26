@@ -4,13 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Myocardial Infarction Prediction</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; }
+        .container { width: 50%; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px gray; }
+        input { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid gray; }
+        button { background: #28a745; color: white; padding: 10px; border: none; cursor: pointer; }
+        button:hover { background: #218838; }
+    </style>
 </head>
 <body>
-    <h2>Myocardial Infarction Prediction</h2>
-    <form action="/predict" method="post">
-        <label>Enter Features (comma-separated):</label><br>
-        <input type="text" name="features" required>
-        <button type="submit">Predict</button>
-    </form>
+    <div class="container">
+        <h2>Enter Patient Details</h2>
+        <form action="/predict" method="post">
+            {% for column in columns %}
+                <label>{{ column }}:</label>
+                <input type="text" name="{{ column }}" required>
+            {% endfor %}
+            <button type="submit">Predict</button>
+        </form>
+    </div>
 </body>
 </html>
