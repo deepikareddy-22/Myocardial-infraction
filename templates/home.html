@@ -10,7 +10,7 @@
             font-family: Arial, sans-serif;
         }
         .container {
-            max-width: 500px;
+            max-width: 600px;
             margin: 50px auto;
             background: #add8e6;
             padding: 20px;
@@ -53,38 +53,62 @@
     <div class="container">
         <h2>Classification of Myocardial Infarction</h2>
         <form action="/predict" method="post">
-            <label for="Full_Name">Full Name:</label>
-            <input type="text" id="Full_Name" name="Full_Name" placeholder="Enter full name" required>
+            <label for="full_name">Full Name:</label>
+            <input type="text" id="full_name" name="full_name" placeholder="Enter full name" required>
 
-            <label for="ID">ID (Patient ID - Any Number):</label>
-            <input type="number" id="ID" name="ID" placeholder="Enter patient ID" required>
-            
-            <label for="D_AD_ORIT">D_AD_ORIT (Diastolic BP on Admission - Normal: 60-90 mmHg):</label>
-            <input type="number" id="D_AD_ORIT" name="D_AD_ORIT" placeholder="e.g., 80" min="40" max="120" required>
-            
-            <label for="S_AD_ORIT">S_AD_ORIT (Systolic BP on Admission - Normal: 90-140 mmHg):</label>
-            <input type="number" id="S_AD_ORIT" name="S_AD_ORIT" placeholder="e.g., 120" min="70" max="200" required>
-            
-            <label for="K_SH_POST">K_SH_POST (Post Infarction Complications Score - 0 to 10):</label>
-            <input type="number" id="K_SH_POST" name="K_SH_POST" placeholder="e.g., 2" min="0" max="10" required>
-            
-            <label for="L_BLOOD">L_BLOOD (Leukocyte Count in Blood - Normal: 4,000-11,000 per µL):</label>
-            <input type="number" id="L_BLOOD" name="L_BLOOD" placeholder="e.g., 7500" min="1000" max="20000" required>
-            
-            <label for="ANT_CA_S_n">ANT_CA_S_n (Anterior Cardiac Syndrome Indicator - 0 or 1):</label>
-            <input type="number" id="ANT_CA_S_n" name="ANT_CA_S_n" placeholder="0 = No, 1 = Yes" min="0" max="1" required>
-            
-            <label for="ZSN">ZSN (Left Ventricular Ejection Fraction - Normal: 50-70%):</label>
-            <input type="number" id="ZSN" name="ZSN" placeholder="e.g., 55" min="10" max="90" required>
-            
-            <label for="AGE">AGE (Patient Age - Typically 30-100 years):</label>
-            <input type="number" id="AGE" name="AGE" placeholder="e.g., 60" min="18" max="120" required>
-            
-            <label for="TIME_B_S">TIME_B_S (Time Before Symptoms Onset - Hours):</label>
-            <input type="number" id="TIME_B_S" name="TIME_B_S" placeholder="e.g., 3" min="0" max="48" required>
-            
-            <label for="NITR_S">NITR_S (Nitroglycerin Sensitivity - 0 or 1):</label>
-            <input type="number" id="NITR_S" name="NITR_S" placeholder="0 = No, 1 = Yes" min="0" max="1" required>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="bp_systolic">Systolic BP (mmHg):</label>
+            <input type="number" id="bp_systolic" name="bp_systolic" required>
+
+            <label for="bp_diastolic">Diastolic BP (mmHg):</label>
+            <input type="number" id="bp_diastolic" name="bp_diastolic" required>
+
+            <label for="heart_rate">Heart Rate (bpm):</label>
+            <input type="number" id="heart_rate" name="heart_rate" required>
+
+            <label for="cholesterol">Cholesterol (mg/dL):</label>
+            <input type="number" id="cholesterol" name="cholesterol" required>
+
+            <label for="blood_sugar">Blood Sugar Level (mg/dL):</label>
+            <input type="number" id="blood_sugar" name="blood_sugar" required>
+
+            <label for="smoking">Smoking Status (0 = No, 1 = Yes):</label>
+            <input type="number" id="smoking" name="smoking" min="0" max="1" required>
+
+            <label for="diabetes">Diabetes (0 = No, 1 = Yes):</label>
+            <input type="number" id="diabetes" name="diabetes" min="0" max="1" required>
+
+            <label for="family_history">Family History of Heart Disease (0 = No, 1 = Yes):</label>
+            <input type="number" id="family_history" name="family_history" min="0" max="1" required>
+
+            <label for="exercise">Exercise Regularly (0 = No, 1 = Yes):</label>
+            <input type="number" id="exercise" name="exercise" min="0" max="1" required>
+
+            <label for="obesity">Obesity Level (BMI):</label>
+            <input type="number" id="obesity" name="obesity" required>
+
+            <label for="stress">Stress Level (Scale 1-10):</label>
+            <input type="number" id="stress" name="stress" min="1" max="10" required>
+
+            <label for="alcohol">Alcohol Consumption (0 = No, 1 = Yes):</label>
+            <input type="number" id="alcohol" name="alcohol" min="0" max="1" required>
+
+            <label for="physical_activity">Physical Activity (hours per week):</label>
+            <input type="number" id="physical_activity" name="physical_activity" required>
+
+            <label for="medication">On Heart Medication (0 = No, 1 = Yes):</label>
+            <input type="number" id="medication" name="medication" min="0" max="1" required>
+
+            <label for="ecg_result">ECG Abnormality (0 = Normal, 1 = Abnormal):</label>
+            <input type="number" id="ecg_result" name="ecg_result" min="0" max="1" required>
+
+            <label for="chest_pain">Chest Pain Severity (Scale 1-10):</label>
+            <input type="number" id="chest_pain" name="chest_pain" min="1" max="10" required>
+
+            <label for="time_symptoms">Time Since Symptoms Onset (hours):</label>
+            <input type="number" id="time_symptoms" name="time_symptoms" required>
 
             <button type="submit">Predict</button>
         </form>
