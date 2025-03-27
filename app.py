@@ -1,42 +1,64 @@
-from flask import Flask, render_template, request
-import numpy as np
+
+        from flask import Flask, render_template, request
 import pickle
+import numpy as np
 
 app = Flask(__name__)
 
 # Load the trained model
-model = pickle.load(open("model.pkl", "rb"))
+with open("model_top10.pkl", "rb") as f:
+    model_data = pickle.load(f)
 
-# Ensure this matches the feature count used during training
-EXPECTED_FEATURE_COUNT = 122
+xgb_model = model_data["model"]  
+top_10_features = model_data["top_10_features"]  
 
-@app.route('/')
+@app.route("/")
 def home():
-    return render_template('home.html')
+    return render_template("home.html")
 
-@app.route('/predict', methods=['POST'])
+@app.route("/predict", methods=["POST"])
 def predict():
     try:
-        # Extract input values from the form
-        input_data = [float(request.form[key]) for key in request.form.keys()]
+        full_name = request.form["Full_Name"]  # Get Full Name
+        ID = int(request.form["ID"])
+        D_AD_ORIT = float(request.form["D_AD_ORIT"])
+        S_AD_ORIT = float(request.form["S_AD_ORIT"])
+        K_SH_POST = float(request.form["K_SH_POST"])
+        L_BLOOD = float(request.form["L_BLOOD"])
+        ANT_CA_S_n = int(request.form["ANT_CA_S_n"])
+        ZSN = float(request.form["ZSN"])
+        AGE = int(request.form["AGE"])
+        TIME_B_S = float(request.form["TIME_B_S"])
+        NITR_S = int(request.form["NITR_S"])
+
+        # Create input array
+        input_data = np.array([[D_AD_ORIT, S_AD_ORIT, K_SH_POST, L_BLOOD, ANT_CA_S_n, ZSN, AGE, TIME_B_S, NITR_S]])
         
-        # Ensure the correct number of features are passed
-        if len(input_data) != EXPECTED_FEATURE_COUNT:
-            return render_template('result.html', prediction_text=f"Error: Feature shape mismatch, expected: {EXPECTED_FEATURE_COUNT}, got {len(input_data)}", error=True)
-
-        # Convert list to numpy array and reshape for model input
-        final_features = np.array(input_data).reshape(1, -1)
+        # Make Prediction
+        prediction = xgb_model.predict(input_data)[0]
         
-        # Make prediction
-        prediction = model.predict(final_features)[0]
+        # Assign risk level
+        if prediction == 1:
+            risk_level = "High Risk of Myocardial Infarction"
+            result_color = "#dc3545"  # Red
+            bg_color = "#f8d7da"
+        else:
+            risk_level = "Low Risk of Myocardial Infarction"
+            result_color = "#28a745"  # Green
+            bg_color = "#e9ffe9"
 
-        # Interpret prediction result
-        result_text = "High Risk of Myocardial Infarction" if prediction == 1 else "Low Risk of Myocardial Infarction"
-
-        return render_template('result.html', prediction_text=result_text, error=False)
+        # Pass data to result.html
+        return render_template(
+            "result.html",
+            prediction=risk_level,
+            result_color=result_color,
+            bg_color=bg_color,
+            full_name=full_name,  # Pass Full Name
+            input_data=request.form  # Pass all input data
+        )
 
     except Exception as e:
-        return render_template('result.html', prediction_text=f"Error: {str(e)}", error=True)
+        return render_template("result.html", error=str(e))
 
 if __name__ == "__main__":
     app.run(debug=True)
