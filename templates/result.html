@@ -15,58 +15,57 @@
             background: #add8e6;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
         h2 {
             color: #333;
         }
         .result-box {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 20px;
             padding: 15px;
             border-radius: 5px;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
         }
         .low-risk {
-            background-color: #90EE90; /* Light green */
+            background-color: #90EE90;
             color: green;
         }
         .high-risk {
-            background-color: #FF7F7F; /* Light red */
+            background-color: #ff9999;
             color: red;
         }
-        button {
-            margin-top: 20px;
-            padding: 10px;
+        .error {
+            background-color: #ffcccb;
+            color: darkred;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
             background: #4682B4;
+            color: white;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
+            text-decoration: none;
             font-size: 16px;
-            color: white;
         }
-        button:hover {
+        .back-btn:hover {
             background: #4169E1;
         }
     </style>
 </head>
 <body>
-
     <div class="container">
         <h2>Prediction Result</h2>
-        <div class="result-box {% if 'High Risk' in prediction_text %}high-risk{% else %}low-risk{% endif %}">
+        <div class="result-box {% if error %}error{% elif 'Low Risk' in prediction_text %}low-risk{% else %}high-risk{% endif %}">
             {{ prediction_text }}
         </div>
-        <a href="/"><button>Go Back</button></a>
+        <a href="/" class="back-btn">Go Back</a>
     </div>
-
 </body>
 </html>
 
             
-       
-                    
             
-        
-    
