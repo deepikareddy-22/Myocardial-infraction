@@ -3,69 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction Result</title>
+    <title>Classification of Myocardial Infarction</title>
     <style>
         body {
-            background-color: #f2f2f2;
             font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 30px;
         }
         .container {
-            max-width: 500px;
-            margin: 50px auto;
-            background: #add8e6;
+            max-width: 600px;
+            margin: auto;
             padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            text-align: center;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-        h2 {
+        h1 {
+            color: #007bff;
+        }
+        p {
+            font-size: 18px;
             color: #333;
         }
-        .result-box {
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-            font-size: 18px;
+        .result {
+            font-size: 22px;
             font-weight: bold;
-        }
-        .low-risk {
-            background-color: #90EE90;
-            color: green;
-        }
-        .high-risk {
-            background-color: #ff9999;
-            color: red;
-        }
-        .error {
-            background-color: #ffcccb;
-            color: darkred;
-        }
-        .back-btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: #4682B4;
-            color: white;
-            border: none;
+            color: {{ result_color }};
+            padding: 10px;
             border-radius: 5px;
-            text-decoration: none;
-            font-size: 16px;
+            display: inline-block;
+            background-color: {{ bg_color }};
         }
-        .back-btn:hover {
-            background: #4169E1;
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Prediction Result</h2>
-        <div class="result-box {% if error %}error{% elif 'Low Risk' in prediction_text %}low-risk{% else %}high-risk{% endif %}">
-            {{ prediction_text }}
-        </div>
-        <a href="/" class="back-btn">Go Back</a>
+        <h1>Classification of Myocardial Infarction</h1>  <!-- Updated Heading -->
+        
+        {% if error %}
+            <p style="color: red;">Error: {{ error }}</p>
+        {% else %}
+            <p><strong>Patient Name:</strong> {{ full_name }}</p>  <!-- Full Name Displayed -->
+            <p>The predicted outcome is: <span class="result">{{ prediction }}</span></p>
+            <h2>Entered Data</h2>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Value</th>
+                </tr>
+                {% for key, value in input_data.items() %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        
+        <br>
+        <a href="/" style="text-decoration: none; color: #007bff; font-weight: bold;">⬅ Go Back</a>
     </div>
 </body>
 </html>
 
             
-            
+           
