@@ -6,47 +6,65 @@
     <title>Prediction Result</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
             background-color: #f2f2f2;
-            padding: 50px;
+            font-family: Arial, sans-serif;
         }
         .container {
+            max-width: 500px;
+            margin: 50px auto;
             background: #add8e6;
             padding: 20px;
             border-radius: 10px;
-            display: inline-block;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         h2 {
             color: #333;
         }
-        .result {
+        .result-box {
             font-size: 20px;
             font-weight: bold;
-            color: #d9534f; /* Red for high risk */
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
         }
         .low-risk {
-            color: #5cb85c; /* Green for low risk */
+            background-color: #90EE90; /* Light green */
+            color: green;
         }
-        a {
-            display: block;
+        .high-risk {
+            background-color: #FF7F7F; /* Light red */
+            color: red;
+        }
+        button {
             margin-top: 20px;
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
+            padding: 10px;
+            background: #4682B4;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+        }
+        button:hover {
+            background: #4169E1;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
         <h2>Prediction Result</h2>
-        <p class="result {{ 'low-risk' if 'Low Risk' in prediction else '' }}">{{ prediction }}</p>
-        <a href="/">Go Back</a>
+        <div class="result-box {% if 'High Risk' in prediction_text %}high-risk{% else %}low-risk{% endif %}">
+            {{ prediction_text }}
+        </div>
+        <a href="/"><button>Go Back</button></a>
     </div>
+
 </body>
 </html>
 
-       
+            
        
                     
             
