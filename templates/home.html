@@ -6,72 +6,88 @@
     <title>Classification of Myocardial Infarction</title>
     <style>
         body {
+            background-color: #f8e8e8; /* Light pastel pink */
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #e0f7fa, #f1f8ff); /* Light cyan & blue gradient */
-            text-align: center;
-            padding: 30px;
-            color: #333;
         }
         .container {
-            max-width: 550px;
-            margin: auto;
+            max-width: 500px;
+            margin: 50px auto;
+            background: #fff8dc; /* Light pastel yellow */
             padding: 20px;
-            background: rgba(255, 255, 255, 0.9); /* Soft white */
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-        }
-        h1 {
-            font-size: 26px;
-            color: #2c3e50; /* Dark blue */
-            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
         h2 {
-            font-size: 18px;
-            color: #5d6d7e; /* Subtle grayish-blue */
-            margin-bottom: 20px;
+            text-align: center;
+            color: #5a5a5a;
         }
         label {
             font-weight: bold;
-            color: #444;
+            display: block;
+            margin-top: 10px;
         }
         input {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 16px;
-            background: #f9f9f9;
         }
         button {
-            padding: 12px 22px;
-            font-size: 18px;
+            width: 100%;
+            padding: 10px;
+            background: #87CEFA; /* Light pastel blue */
             border: none;
-            background: #4a90e2; /* Soft blue button */
-            color: white;
             border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
             margin-top: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
         }
         button:hover {
-            background: #357abd;
+            background: #4682B4;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1>Classification of Myocardial Infarction</h1>
-        <h2>(Heart Attack Diagnosis System)</h2>
-        
+        <h2>Classification of Myocardial Infarction</h2>
         <form action="/predict" method="post">
-            {% for feature in columns %}
-            <label>{{ feature.replace("_", " ") }}:</label>
-            <input type="text" name="{{ feature }}" required>
-            {% endfor %}
-            <br><br>
+            
+            <label for="ID">ID:</label>
+            <input type="text" id="ID" name="ID" required>
+            
+            <label for="D_AD_ORIT">D_AD_ORIT (Diastolic Arterial Pressure on Admission):</label>
+            <input type="text" id="D_AD_ORIT" name="D_AD_ORIT" required>
+            
+            <label for="S_AD_ORIT">S_AD_ORIT (Systolic Arterial Pressure on Admission):</label>
+            <input type="text" id="S_AD_ORIT" name="S_AD_ORIT" required>
+            
+            <label for="K_SH_POST">K_SH_POST (Post Infarction Complications):</label>
+            <input type="text" id="K_SH_POST" name="K_SH_POST" required>
+            
+            <label for="L_BLOOD">L_BLOOD (Leukocyte Count in Blood):</label>
+            <input type="text" id="L_BLOOD" name="L_BLOOD" required>
+            
+            <label for="ANT_CA_S_n">ANT_CA_S_n (Anterior Cardiac Syndrome Indicator):</label>
+            <input type="text" id="ANT_CA_S_n" name="ANT_CA_S_n" required>
+            
+            <label for="ZSN">ZSN (Left Ventricular Ejection Fraction):</label>
+            <input type="text" id="ZSN" name="ZSN" required>
+            
+            <label for="AGE">AGE:</label>
+            <input type="text" id="AGE" name="AGE" required>
+            
+            <label for="TIME_B_S">TIME_B_S (Time Before Symptoms Onset):</label>
+            <input type="text" id="TIME_B_S" name="TIME_B_S" required>
+            
+            <label for="NITR_S">NITR_S (Nitroglycerin Sensitivity):</label>
+            <input type="text" id="NITR_S" name="NITR_S" required>
+
             <button type="submit">Predict</button>
         </form>
     </div>
+
 </body>
 </html>
