@@ -56,34 +56,34 @@
         <form action="/predict" method="post">
             
             <label for="ID">ID (Patient ID - Any Number):</label>
-            <input type="number" id="ID" name="ID" placeholder="Enter patient ID" required>
+            <input type="number" id="ID" name="ID" value="101" required>
             
             <label for="D_AD_ORIT">D_AD_ORIT (Diastolic BP on Admission - Normal: 60-90 mmHg):</label>
-            <input type="number" id="D_AD_ORIT" name="D_AD_ORIT" placeholder="e.g., 80" min="40" max="120" required>
+            <input type="number" id="D_AD_ORIT" name="D_AD_ORIT" value="80" min="40" max="120" required>
             
             <label for="S_AD_ORIT">S_AD_ORIT (Systolic BP on Admission - Normal: 90-140 mmHg):</label>
-            <input type="number" id="S_AD_ORIT" name="S_AD_ORIT" placeholder="e.g., 120" min="70" max="200" required>
+            <input type="number" id="S_AD_ORIT" name="S_AD_ORIT" value="120" min="70" max="200" required>
             
             <label for="K_SH_POST">K_SH_POST (Post Infarction Complications Score - 0 to 10):</label>
-            <input type="number" id="K_SH_POST" name="K_SH_POST" placeholder="e.g., 2" min="0" max="10" required>
+            <input type="number" id="K_SH_POST" name="K_SH_POST" value="2" min="0" max="10" required>
             
             <label for="L_BLOOD">L_BLOOD (Leukocyte Count in Blood - Normal: 4,000-11,000 per µL):</label>
-            <input type="number" id="L_BLOOD" name="L_BLOOD" placeholder="e.g., 7500" min="1000" max="20000" required>
+            <input type="number" id="L_BLOOD" name="L_BLOOD" value="7500" min="1000" max="20000" required>
             
             <label for="ANT_CA_S_n">ANT_CA_S_n (Anterior Cardiac Syndrome Indicator - 0 or 1):</label>
-            <input type="number" id="ANT_CA_S_n" name="ANT_CA_S_n" placeholder="0 = No, 1 = Yes" min="0" max="1" required>
+            <input type="number" id="ANT_CA_S_n" name="ANT_CA_S_n" value="1" min="0" max="1" required>
             
             <label for="ZSN">ZSN (Left Ventricular Ejection Fraction - Normal: 50-70%):</label>
-            <input type="number" id="ZSN" name="ZSN" placeholder="e.g., 55" min="10" max="90" required>
+            <input type="number" id="ZSN" name="ZSN" value="55" min="10" max="90" required>
             
             <label for="AGE">AGE (Patient Age - Typically 30-100 years):</label>
-            <input type="number" id="AGE" name="AGE" placeholder="e.g., 60" min="18" max="120" required>
+            <input type="number" id="AGE" name="AGE" value="60" min="18" max="120" required>
             
             <label for="TIME_B_S">TIME_B_S (Time Before Symptoms Onset - Hours):</label>
-            <input type="number" id="TIME_B_S" name="TIME_B_S" placeholder="e.g., 3" min="0" max="48" required>
+            <input type="number" id="TIME_B_S" name="TIME_B_S" value="3" min="0" max="48" required>
             
             <label for="NITR_S">NITR_S (Nitroglycerin Sensitivity - 0 or 1):</label>
-            <input type="number" id="NITR_S" name="NITR_S" placeholder="0 = No, 1 = Yes" min="0" max="1" required>
+            <input type="number" id="NITR_S" name="NITR_S" value="0" min="0" max="1" required>
 
             <button type="submit">Predict</button>
         </form>
@@ -91,3 +91,8 @@
 
 </body>
 </html>
+
+            
+            
+            
+           
