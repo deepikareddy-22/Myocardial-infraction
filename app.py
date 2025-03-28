@@ -19,32 +19,44 @@ def home():
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        # Extract and validate input data
+        # Extract input data from form
         data = []
         for feature in top_features:
-            value = request.form.get(feature, 0)  # Get input, default to 0 if missing
+            value = request.form.get(feature, 0)  # Get input value (default 0 if missing)
             try:
                 data.append(float(value))  # Convert to float
             except ValueError:
                 return render_template("result.html", error=f"Invalid input for {feature}: {value}")
 
-        features = np.array(data).reshape(1, -1)  # Reshape for model input
+        # Convert input data to NumPy array
+        features = np.array(data).reshape(1, -1)  
 
-        # Make prediction
+        # Ensure the model exists
+        if model is None:
+            return render_template("result.html", error="Model not loaded properly.")
+
+        # Predict risk level
         prediction = model.predict(features)[0]  # Get predicted class (0 or 1)
-        probability = model.predict_proba(features)[0][int(prediction)] * 100  # Get probability %
 
-        # Define risk levels (customize as needed)
-        risk_mapping = {0: "Low", 1: "High"}
+        # Get probability (if available)
+        try:
+            probability = model.predict_proba(features)[0][int(prediction)] * 100
+        except AttributeError:
+            probability = "N/A"
+
+        # Define risk level mapping
+        risk_mapping = {0: "Low Risk", 1: "High Risk"}
         risk_level = risk_mapping.get(prediction, "Unknown")
 
         return render_template("result.html", 
-                               patient_id=int(data[0]),  # First value is patient ID
+                               patient_id=int(data[0]),  
                                risk_level=risk_level,
                                probability=probability)
 
     except Exception as e:
-        return render_template("result.html", error=f"Error: {str(e)}")
+        return render_template("result.html", error=f"Internal Error: {str(e)}")
+
+       
 
 if __name__ == "__main__":
     app.run(debug=True)
