@@ -1,10 +1,14 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, jsonify, render_template
 import pickle
 import numpy as np
 
-# Load the trained model
+# Load the trained model correctly
 with open("model_top10.pkl", "rb") as f:
     model = pickle.load(f)
+
+# Check if the model is correctly loaded
+if not hasattr(model, "predict"):
+    raise ValueError("The loaded model is not a valid machine learning model.")
 
 # Define top 10 important features
 top_features = ["ID", "D_AD_ORIT", "S_AD_ORIT", "K_SH_POST", "L_BLOOD", 
@@ -19,44 +23,31 @@ def home():
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        # Extract input data from form
-        data = []
-        for feature in top_features:
-            value = request.form.get(feature, 0)  # Get input value (default 0 if missing)
-            try:
-                data.append(float(value))  # Convert to float
-            except ValueError:
-                return render_template("result.html", error=f"Invalid input for {feature}: {value}")
+        # Extract input data
+        data = [float(request.form.get(feature, 0)) for feature in top_features]
+        features = np.array(data).reshape(1, -1)
 
-        # Convert input data to NumPy array
-        features = np.array(data).reshape(1, -1)  
+        # Make prediction
+        prediction = model.predict(features)[0]  # 0 = Low Risk, 1 = High Risk
 
-        # Ensure the model exists
-        if model is None:
-            return render_template("result.html", error="Model not loaded properly.")
+        # Get probability (if model supports it)
+        if hasattr(model, "predict_proba"):
+            probability = model.predict_proba(features)[0][1] * 100  # Get probability for class 1 (high risk)
+        else:
+            probability = None  # If model doesn't support probability prediction
 
-        # Predict risk level
-        prediction = model.predict(features)[0]  # Get predicted class (0 or 1)
+        # Risk Level Mapping
+        risk_level = "High Risk" if prediction == 1 else "Low Risk"
 
-        # Get probability (if available)
-        try:
-            probability = model.predict_proba(features)[0][int(prediction)] * 100
-        except AttributeError:
-            probability = "N/A"
-
-        # Define risk level mapping
-        risk_mapping = {0: "Low Risk", 1: "High Risk"}
-        risk_level = risk_mapping.get(prediction, "Unknown")
-
-        return render_template("result.html", 
-                               patient_id=int(data[0]),  
-                               risk_level=risk_level,
-                               probability=probability)
+        return render_template(
+            "result.html",
+            patient_id=int(data[0]),
+            risk_level=risk_level,
+            probability=probability if probability else "N/A"
+        )
 
     except Exception as e:
         return render_template("result.html", error=f"Internal Error: {str(e)}")
-
-       
 
 if __name__ == "__main__":
     app.run(debug=True)
